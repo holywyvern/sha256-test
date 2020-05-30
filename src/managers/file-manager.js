@@ -24,8 +24,9 @@ async function validatePrevHash(prev) {
   }
 }
 
-async function writeLine() {
-  fs.appendFile();
+async function writeLine(prev, message, nonce) {
+  const line = [prev, message, nonce].join(VALUE_SEPARATOR);
+  await fs.appendFile(STORAGE_FILE, line, "utf8");
 }
 
 async function saveToFile(prev, message, nonce) {
