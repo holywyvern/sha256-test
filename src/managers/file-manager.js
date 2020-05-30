@@ -1,5 +1,8 @@
 const fs = require("fs-extra");
 const lockfile = require("proper-lockfile");
+
+const hashGenerator = require("../generators/hash-generator");
+
 const {
   STORAGE_FILE,
   LINE_SEPARATOR,
@@ -23,7 +26,15 @@ async function getLastLine() {
 
 async function validatePrevHash(prev) {
   const lastLine = await getLastLine();
-  if (lastLine && lastLine.prevHash !== prev) {
+  if (!lastLine) {
+    return;
+  }
+  const hash = hashGenerator.generate(
+    lastLine.prevHash,
+    lastLine.message,
+    lastLine.nonce
+  );
+  if (hash !== prev) {
     throw new Error("Previous hash does not match stored hash");
   }
 }

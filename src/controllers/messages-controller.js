@@ -16,7 +16,11 @@ async function create(message) {
     const lastLine = await fileManager.getLastLine();
     let prev = DEFAULT_HASH;
     if (lastLine) {
-      prev = lastLine.prevHash;
+      prev = hashGenerator.generate(
+        lastLine.prevHash,
+        lastLine.message,
+        lastLine.nonce
+      );
     }
     const nonce = await hashGenerator.findNonce(prev, message);
     await fileManager.saveToFile(prev, message, nonce);
