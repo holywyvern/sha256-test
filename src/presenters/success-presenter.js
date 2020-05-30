@@ -1,5 +1,5 @@
 function present(message) {
-  return { status: 200, message };
+  return { status: 201, response: { message } };
 }
 
 module.exports = {
