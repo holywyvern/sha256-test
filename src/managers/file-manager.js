@@ -30,17 +30,11 @@ async function writeLine(prev, message, nonce) {
 }
 
 async function saveToFile(prev, message, nonce) {
-  try {
-    await fs.ensureFile(STORAGE_FILE);
-    const release = await lockfile.lock(STORAGE_FILE);
-    await validatePrevHash(prev);
-    await writeLine(prev, message, nonce);
-    await release();
-    return true;
-  } catch (error) {
-    // TODO: log error
-  }
-  return false;
+  await fs.ensureFile(STORAGE_FILE);
+  const release = await lockfile.lock(STORAGE_FILE);
+  await validatePrevHash(prev);
+  await writeLine(prev, message, nonce);
+  await release();
 }
 
 module.exports = {
