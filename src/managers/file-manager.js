@@ -44,5 +44,6 @@ async function saveToFile(prev, message, nonce) {
 }
 
 module.exports = {
+  getLastLine,
   saveToFile,
 };
