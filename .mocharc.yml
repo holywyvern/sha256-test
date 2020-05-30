@@ -1,0 +1,7 @@
+extension:
+  - "js"
+  - "spec.js"
+spec: "test/**/*.spec.js"
+watch-files:
+  - "src/**/*.js"
+  - "test/**/*.spec.js"
