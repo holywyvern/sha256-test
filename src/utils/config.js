@@ -2,8 +2,17 @@ const STORAGE_FILE = process.env.STORAGE_FILE || "store.csv";
 const LINE_SEPARATOR = process.env.LINE_SEPARATOR || "\n";
 const VALUE_SEPARATOR = process.env.VALUE_SEPARATOR || ",";
 
+const PORT = process.env.PORT || 8080;
+
+const MAX_MESSAGE_LENGTH = 128;
+
+const DEFAULT_HASH = "0000000000000000000000000000000000000";
+
 module.exports = {
   STORAGE_FILE,
   LINE_SEPARATOR,
   VALUE_SEPARATOR,
+  PORT,
+  MAX_MESSAGE_LENGTH,
+  DEFAULT_HASH,
 };
