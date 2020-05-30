@@ -7,7 +7,11 @@ const {
 } = require("../utils/config");
 
 async function getLastLine() {
+  await fs.ensureFile(STORAGE_FILE);
   const data = await fs.readFile(STORAGE_FILE, "utf-8");
+  if (!data) {
+    return null;
+  }
   const lines = data.trim().split(LINE_SEPARATOR);
   if (lines.length === 0) {
     return null;
@@ -26,11 +30,10 @@ async function validatePrevHash(prev) {
 
 async function writeLine(prev, message, nonce) {
   const line = [prev, message, nonce].join(VALUE_SEPARATOR);
-  await fs.appendFile(STORAGE_FILE, line, "utf8");
+  await fs.appendFile(STORAGE_FILE, `${LINE_SEPARATOR}${line}`, "utf8");
 }
 
 async function saveToFile(prev, message, nonce) {
-  await fs.ensureFile(STORAGE_FILE);
   const release = await lockfile.lock(STORAGE_FILE);
   await validatePrevHash(prev);
   await writeLine(prev, message, nonce);
