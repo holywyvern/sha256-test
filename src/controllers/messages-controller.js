@@ -14,7 +14,7 @@ async function create(message) {
   await validate(message);
   try {
     const lastLine = await fileManager.getLastLine();
-    const prev = DEFAULT_HASH;
+    let prev = DEFAULT_HASH;
     if (lastLine) {
       prev = lastLine.prevHash;
     }
@@ -22,6 +22,7 @@ async function create(message) {
     await fileManager.saveToFile(prev, message, nonce);
     return successPresenter.present("Message was properly stored");
   } catch (error) {
+    console.error(error);
     // TODO: Log error
     // We don't present the internal error to the client
     throw new HttpError(
