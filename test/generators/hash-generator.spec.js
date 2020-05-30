@@ -23,6 +23,7 @@ describe("HashGenerator", function () {
         const nonce = await HashGenerator.findNonce(prev, message);
         expect(nonce).to.be.a("number");
       });
+
       it("creates a valid hash", async function () {
         const prev = "0012837218371283712837812akdjr98";
         const message = "Generating hash";
