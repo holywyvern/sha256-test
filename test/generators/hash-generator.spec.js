@@ -5,7 +5,7 @@ const expect = require("chai").expect;
 
 describe("HashGenerator", function () {
   describe(".generate", function () {
-    describe("When valid parameters are given", function () {
+    context("When valid parameters are given", function () {
       it("generates a string based on input", function () {
         const prev = "000000000000000000000";
         const message = "Hello world";
@@ -16,7 +16,7 @@ describe("HashGenerator", function () {
     });
   });
   describe(".findNonce", function () {
-    describe("when valid parameters are given", function () {
+    context("when valid parameters are given", function () {
       it("finds a numeric value based on input", async function () {
         const prev = "0012837218371283712837812akdjr98";
         const message = "Generating hash";
