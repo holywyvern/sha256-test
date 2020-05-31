@@ -1,3 +1,4 @@
+require: "./test/boot.js"
 extension:
   - "js"
   - "spec.js"
