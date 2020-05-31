@@ -2,6 +2,7 @@ const fs = require("fs-extra");
 const lockfile = require("proper-lockfile");
 
 const hashGenerator = require("../generators/hash-generator");
+const { validate } = require("../validators/hash-validator");
 
 const {
   STORAGE_FILE,
@@ -39,6 +40,13 @@ async function validatePrevHash(prev) {
   }
 }
 
+async function validateCurrentHash(prev, message, nonce) {
+  const hash = hashGenerator.generate(prev, message, nonce);
+  if (!validate(hash)) {
+    throw new Error("Current hash is not valid");
+  }
+}
+
 async function writeLine(prev, message, nonce) {
   const line = [prev, message, nonce].join(VALUE_SEPARATOR);
   await fs.appendFile(STORAGE_FILE, `${LINE_SEPARATOR}${line}`, "utf8");
@@ -47,6 +55,7 @@ async function writeLine(prev, message, nonce) {
 async function saveToFile(prev, message, nonce) {
   const release = await lockfile.lock(STORAGE_FILE);
   await validatePrevHash(prev);
+  await validateCurrentHash(prev, message, nonce);
   await writeLine(prev, message, nonce);
   await release();
 }
