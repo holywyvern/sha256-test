@@ -1,6 +1,7 @@
 const fs = require("fs-extra");
 
 const FileManager = require("../../src/managers/file-manager");
+const HashGenerator = require("../../src/generators/hash-generator");
 
 const { STORAGE_FILE } = require("../../src/utils/config");
 
@@ -36,6 +37,52 @@ describe("FileManager", function () {
     });
   });
   describe(".saveToFile", function () {
-    // TODO: Add test
+    context("when a valid hash is processed", function () {
+      it("is fulfiled", async function () {
+        const last = await FileManager.getLastLine();
+        const message = "Testing File Manager";
+        const prev = HashGenerator.generate(
+          last.prevHash,
+          last.message,
+          last.nonce
+        );
+        const nonce = await HashGenerator.findNonce(prev, message);
+
+        const promise = FileManager.saveToFile(prev, message, nonce);
+        await expect(promise).to.be.fulfilled;
+      });
+    });
+
+    context("when an invalid prev hash is given", function () {
+      it("is rejected", function () {
+        const message = "Testing File Manager";
+        const promise = FileManager.getLastLine().then(async (last) => {
+          const prev = HashGenerator.generate(
+            last.prevHash,
+            last.message,
+            last.nonce
+          );
+          const nonce = await HashGenerator.findNonce(prev, message);
+          return FileManager.saveToFile("x", message, nonce);
+        });
+        expect(promise).to.be.rejected;
+      });
+    });
+
+    context("when an invalid nonce is given", function () {
+      it("is rejected", function () {
+        const message = "Testing File Manager";
+        const promise = FileManager.getLastLine().then(async (last) => {
+          const prev = HashGenerator.generate(
+            last.prevHash,
+            last.message,
+            last.nonce
+          );
+          const nonce = (await HashGenerator.findNonce(prev, message)) - 1;
+          return FileManager.saveToFile(prev, message, nonce);
+        });
+        expect(promise).to.be.rejected;
+      });
+    });
   });
 });
