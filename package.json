@@ -5,8 +5,9 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "test": "mocha test",
-    "lint": "prettier --check \"{src,test}/**/*.js\""
+    "test": "npm run lint && npm run test:units",
+    "lint": "prettier --check \"{src,test}/**/*.js\"",
+    "test:units": "mocha test"
   },
   "repository": {
     "type": "git",
