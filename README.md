@@ -4,11 +4,11 @@ A test for SHA256 output to a file
 
 ## Installation
 
-## Linux/OSX
+### Linux/OSX
 
 If you don't have Node.js installed, I suggest downloading [nodenv](https://github.com/nodenv/nodenv) to install specific node versions. This project is currently using Node 12.16.1.
 
-## Windows
+### Windows
 
 Windows 10 may use [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) and follow the instructions on Linux.
 
