@@ -53,9 +53,9 @@ async function writeLine(prev, message, nonce) {
 }
 
 async function saveToFile(prev, message, nonce) {
+  await validateCurrentHash(prev, message, nonce);
   const release = await lockfile.lock(STORAGE_FILE);
   await validatePrevHash(prev);
-  await validateCurrentHash(prev, message, nonce);
   await writeLine(prev, message, nonce);
   await release();
 }
