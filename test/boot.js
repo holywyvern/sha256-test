@@ -7,6 +7,6 @@ dotenv.config({ path: dotEnvPath });
 
 const { STORAGE_FILE } = require("../src/utils/config");
 
-if (fs.existsSync()) {
+if (fs.existsSync(STORAGE_FILE)) {
   fs.removeSync(STORAGE_FILE);
 }
