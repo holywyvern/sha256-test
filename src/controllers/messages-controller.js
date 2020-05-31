@@ -9,6 +9,7 @@ const successPresenter = require("../presenters/success-presenter");
 const { validate } = require("../validators/message-validator");
 
 const { DEFAULT_HASH } = require("../utils/config");
+const logger = require("../utils/logger");
 
 async function create(message) {
   await validate(message);
@@ -26,8 +27,7 @@ async function create(message) {
     await fileManager.saveToFile(prev, message, nonce);
     return successPresenter.present("Message was properly stored");
   } catch (error) {
-    console.error(error);
-    // TODO: Log error
+    logger.error(error);
     // We don't present the internal error to the client
     throw new HttpError(
       500,
