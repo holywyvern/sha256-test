@@ -26,6 +26,8 @@ The server is mounted at `http://localhost:8080` by default.
 
 The endpoint is `POST /api/messages` with a JSOn body containing an attribute message, of type `string`.
 
+Linting is provided via [prettier](https://prettier.io/), I suggest using any plugin for your editor/IDE of choice.
+
 ## Updating environment
 
 The server uses the following environment variables:
