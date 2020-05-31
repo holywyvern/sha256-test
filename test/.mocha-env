@@ -1,1 +1,2 @@
 STORAGE_FILE=tmp/test.db.csv
+NODE_ENV=test
